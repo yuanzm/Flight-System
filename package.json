@@ -1,0 +1,23 @@
+{
+  "name": "Flight-System",
+  "version": "1.0.0",
+  "description": "A simple system to simulate flights in airport",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuanzm/Flight-System.git"
+  },
+  "keywords": [
+    "system",
+    "node"
+  ],
+  "author": "zimyuan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yuanzm/Flight-System/issues"
+  },
+  "homepage": "https://github.com/yuanzm/Flight-System"
+}

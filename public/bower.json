@@ -1,0 +1,26 @@
+{
+  "name": "Flight-System",
+  "version": "1.0.0",
+  "homepage": "https://github.com/yuanzm/Flight-System",
+  "authors": [
+    "yuanzm <1229084233@qq.com>"
+  ],
+  "description": "A simple system to simulate flights in airport",
+  "keywords": [
+    "system",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "lodash": "~3.10.1",
+    "bootstrap": "~3.3.5"
+  }
+}
