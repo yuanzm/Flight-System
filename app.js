@@ -3,7 +3,7 @@
  * @last-edit-date: 2015-09-12
  */
 
-var config = require('./config')
+var config = require('./config');
 
 require('colors');
 require('./models');
