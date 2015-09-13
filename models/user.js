@@ -11,12 +11,15 @@ var UserSchema = new Schema({
 	// account mesage
 	loginname: {type: String},						// 登录名，真实名字
 	password: {type: String},						// 用户密码
+	identitynumber: {type: String},					// 身份证号码
 	
 	// base message	
-	identitynumber: {type: String},					// 身份证号码
-	phone: {type: String},							// 手机号码
+	phone: {type: String, default: ''},				// 手机号码
 	location: {type: String, default: ''},			// 城市
 	male: {type: String, default: ''},				// 性别
+
+	// flight mmessage
+	order_count: {type: Number, default: 0}			// 订单信息统计 
 });
 
 UserSchema.plugin(BaseModel);

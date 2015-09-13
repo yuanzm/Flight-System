@@ -3,32 +3,32 @@
  * @last-edit-date: 2015-09-12
  */
 
-var config = require('./config');
 
 require('colors');
 require('./models');
-var path                = require("path");
-var express             = require("express");
-var errorhandler        = require('errorhandler');
-var session             = require('express-session');
-var router              = require("./router")
-var auth                = require('./middlewares/auth');
-var errorPageMiddleware = require("./middlewares/error_page");
-var MongoStore = require('connect-mongo')(session);
-var _                   = require('lodash');
-var csurf               = require('csurf');
-var compress            = require('compression');
-var bodyParser          = require('body-parser');
-var requestLog          = require('./middlewares/request_log');
-var errorhandler        = require('errorhandler');
-var renderMiddleware    = require('./middlewares/render');
-var logger              = require("./common/logger");
-var busboy              = require('connect-busboy');
+
+var path                = require("path"),
+    config = require('./config'),
+    express             = require("express"),
+    session             = require('express-session');
+    errorhandler        = require('errorhandler'),
+    router              = require("./router"),
+    auth                = require('./middlewares/auth'),
+    errorPageMiddleware = require("./middlewares/error_page"),
+    RedisStore          = require('connect-redis')(session);
+    _                   = require('lodash'),
+    csurf               = require('csurf'),
+    compress            = require('compression'),
+    bodyParser          = require('body-parser'),
+    requestLog          = require('./middlewares/request_log'),
+    errorhandler        = require('errorhandler'),
+    renderMiddleware    = require('./middlewares/render'),
+    logger              = require("./common/logger"),
+    busboy              = require('connect-busboy'),
+    mongoose            = require('mongoose');
 
 // 静态文件目录
 var staticDir = path.join(__dirname, 'public');
-var exphbs  = require('express-handlebars');
-var mongoose = require('mongoose');
 
 var urlinfo     = require('url').parse(config.host);
 config.hostname = urlinfo.hostname || config.host;
@@ -51,7 +51,6 @@ if (config.debug) {
 }
 
 // 静态资源
-app.use(Loader.less(__dirname));
 app.use('/public', express.static(staticDir));
 
 // 每日访问限制
@@ -64,18 +63,18 @@ app.use(cookieParser);
 app.use(compress());
 
 var session = session({
-  secret: config.session_secret,
-  store: new MongoStore({
-    url: config.db
-  }),
-  resave: true,
-  saveUninitialized: true,
-})
+    secret: config.session_secret,
+    store: new RedisStore({
+        port: config.redis_port,
+        host: config.redis_host
+    }),
+    resave: true,
+    saveUninitialized: true,
+});
+
 app.use(session);
 
-// custom middleware
-app.use(auth.authUser);
-// app.use(auth.blockUser());
+app.listen(3000);
 
 if (!config.debug) {
   app.use(function (req, res, next) {
@@ -94,17 +93,10 @@ _.extend(app.locals, {
 });
 
 app.use(errorPageMiddleware.errorPage);
-// _.extend(app.locals, require('./common/render_helper'));
 app.use(function (req, res, next) {
     res.locals.csrf = req.csrfToken ? req.csrfToken() : '';
     next();
 });
-
-app.use(busboy({
-  limits: {
-    fileSize: 10 * 1024 * 1024 // 10MB
-  }
-}));
 
 app.use('/', router);
 

@@ -22,12 +22,16 @@ var config = {
 
     host: "localhost",
     // mongodb配置
-    db: "mongodb://127.0.0.1/Live-Chat-SAD",
+    db: "mongodb://127.0.0.1/Flight-System",
     
     session_secret: 'flight', // 务必修改
     auth_cookie_name: 'system',
 
     port: 3000,
+
+    redis_host: '127.0.0.1',
+    redis_port: 6379,
+    redis_db: 0
 }
 
 module.exports = config;

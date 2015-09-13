@@ -16,14 +16,14 @@ var OrderSchema = new Schema({
 	starttime: {type: Date, default: Date.now},		// 起飞时间
 	endtime: {type: Date, default: Date.now},		// 降落时间
 
-	start_city: {type； String},					// 出发城市
+	start_city: {type: String},					// 出发城市
 	end_city: {type: String},						// 降落城市
 
 	start_airport: {type: String},					// 起飞机场
 	end_airport: {type: String }, 					// 降落机场
 
 	flight_id: {type: String},						// 订单相关的航班
-	ticket_count: {type: Number, default: 1}		// 票的数量	
+	ticket_count: {type: Number, default: 1},		// 票的数量	
 	
 	order_id: {type: String},						// 订单人的id
 	create_at: {type: Date, default: Date.now},		// 订单创建时间

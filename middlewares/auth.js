@@ -25,10 +25,11 @@ exports.userRequired = function(req, res, next) {
 };
 
 exports.authUser = function(req, res, next) {
+    console.log(req.cookies);
+    
     var ep = new eventproxy();
     ep.fail(next);
     res.locals.current_user = null;
-
     if (config.debug && req.cookies['mock_user']) {
         var mockUser = JSON.parse(req.cookies['mock_user']);
         req.session.user = new UserModel(mockUser);
@@ -42,7 +43,7 @@ exports.authUser = function(req, res, next) {
         user = res.locals.current_user = req.session.user = new UserModel(user);
         next();
     });
-    if (req.session.user) {
+    if (req.session && req.session.user) {
         ep.emit('get_user', req.session.user);
     } else {
         var auth_token = req.signedCookies[config.auth_cookie_name];
